@@ -3,74 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header and Footer Example</title>
+  <title>Transparent Options Panel</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      line-height: 1.6;
     }
 
     header {
       background-color: #adeeff;
-      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px 20px;
       height: 100px;
-      position: relative;
+      position: relative; /* Added for positioning the search box */
     }
 
     header img {
       max-height: 80px;
-      max-width: 100%;
+      animation: fadeIn 3s forwards;
+      opacity: 0;
     }
 
-    .hamburger-menu {
-      display: inline-block;
-      cursor: pointer;
-      position: absolute;
-      top: 20px;
-      left: 20px;
+    @keyframes fadeIn{
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
 
-    .hamburger-menu .line {
-      width: 30px;
-      height: 3px;
-      background-color: white;
-      margin: 5px 0;
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 60px; /* Spacing between options */
     }
 
-    /* Side Panel Styles with Transparency */
-    .side-panel {
-      height: 100%;
-      width: 250px;
-      background-color:white;
-      color: white;
-      position: fixed;
-      top: 0;
-      left: -250px;
-      transition: left 0.3s ease-in-out;
-      padding: 20px;
-      z-index: 1000;
-    }
-
-    .side-panel a {
-      display: block;
-      color: #FFD700;
+    .options a {
+      color: black;
       text-decoration: none;
-      margin: 10px 0;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 5px 15px;
+      transition: color 0.3s ease, background-color 0.3s ease;
     }
 
-    .side-panel a:hover {
-      text-decoration: underline;
+    .options a:hover {
+      color: black;
+      background-color: #adeeff;
+      border-radius: 5px;
+      transition: ease-in-out;
     }
 
-    main {
-      padding: 20px;
-      background-color: #f9f9f9;
-      min-height: 70vh;
+    .search-container {
+      position: absolute;
+      top: 30px;
+      right: 20px;
+    }
+
+    .search-container input[type="text"] {
+      padding: 10px 5px;
+      font-size: 10px;
+      border-radius: 10px;
+      border: 1px solid #71deff;
+      width: 200px;
+      height: 10px;
+      box-shadow: inset;
     }
 
     footer {
@@ -78,63 +77,27 @@
       color: white;
       text-align: center;
       padding: 10px 20px;
-      position: relative;
-      bottom: 0;
-      width: 100%;
-    }
-
-    a {
-      color: #FFD700;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="hamburger-menu" onclick="toggleMenu()">
-      <div class="line"></div>
-      <div class="line"></div>
-      <div class="line"></div>
-    </div>
     <img src="skylogo.png" alt="Logo">
+    <div class="search-container">
+      <input type="text" placeholder="Search location">
+    </div>
   </header>
-
-  <!-- Side Panel -->
-  <div class="side-panel" id="side-panel">
-    <h3>Menu</h3>
-    <a href="#">Home</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
+  <br>
+  <div class="options-panel">
+    <div class="options">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+    </div>
   </div>
-
-  <main>
-    <h2>About Us</h2>
-    <p>
-      This is a simple webpage demonstrating how to include a header and footer using HTML and CSS. You can customize the content, styles, and layout as needed.
-    </p>
-    <p>
-      For more information, feel free to <a href="#">contact us</a>.
-    </p>
-  </main>
-
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <footer>
     <p>&copy; 2025 Your Website Name. All rights reserved.</p>
   </footer>
-
-  <script>
-    function toggleMenu() {
-      var sidePanel = document.getElementById("side-panel");
-      if (sidePanel.style.left === "0px") {
-        sidePanel.style.left = "-250px";
-      } else {
-        sidePanel.style.left = "0";
-      }
-    }
-  </script>
 </body>
 </html>
