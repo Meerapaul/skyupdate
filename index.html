@@ -8,24 +8,31 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh; /* Make the body fill the viewport height */
     }
 
     header {
-      background-color: #adeeff;
+      background-color: white;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: center; /* Center options horizontally */
+      align-items: center; /* Center options vertically */
       height: 100px;
-      position: relative; /* Added for positioning the search box */
+      padding: 0 20px;
+      border-bottom: 1px solid #ccc;
     }
 
     header img {
       max-height: 80px;
       animation: fadeIn 3s forwards;
       opacity: 0;
+      position: absolute; /* Ensure the logo stays in the corner */
+      top: 10px;
+      left: 20px;
     }
 
-    @keyframes fadeIn{
+    @keyframes fadeIn {
       from {
         opacity: 0;
       }
@@ -34,10 +41,29 @@
       }
     }
 
+    .main-content {
+      flex: 1; /* Fill remaining space */
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Vertically center content */
+      align-items: center; /* Horizontally center content */
+    }
+
+    .search-container {
+      margin-bottom: 20px; /* Space between search and options */
+    }
+
+    .search-container input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #71deff;
+      width: 300px;
+    }
+
     .options {
       display: flex;
-      justify-content: center;
-      gap: 60px; /* Spacing between options */
+      gap: 60px;
     }
 
     .options a {
@@ -56,22 +82,6 @@
       transition: ease-in-out;
     }
 
-    .search-container {
-      position: absolute;
-      top: 30px;
-      right: 20px;
-    }
-
-    .search-container input[type="text"] {
-      padding: 10px 5px;
-      font-size: 10px;
-      border-radius: 10px;
-      border: 1px solid #71deff;
-      width: 200px;
-      height: 10px;
-      box-shadow: inset;
-    }
-
     footer {
       background-color: #333;
       color: white;
@@ -83,21 +93,19 @@
 <body>
   <header>
     <img src="skylogo.png" alt="Logo">
-    <div class="search-container">
-      <input type="text" placeholder="Search location">
-    </div>
-  </header>
-  <br>
-  <div class="options-panel">
     <div class="options">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
     </div>
+  </header>
+  <div class="main-content">
+    <div class="search-container">
+      <input type="text" placeholder="Search location">
+    </div>
   </div>
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <footer>
-    
+    Footer Content
   </footer>
 </body>
 </html>
