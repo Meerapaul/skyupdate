@@ -3,109 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>skyupdate</title>
+  <title>skyupdate with Google Places Autocomplete</title>
   <style>
+    /* General Styles */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      height: 100vh;
+      background-color: black;
       display: flex;
       flex-direction: column;
-      height: 100vh; /* Make the body fill the viewport height */
+      color: white;
     }
 
+    /* Header Styles */
     header {
-      background-color: white;
-      display: flex;
-      justify-content: center; /* Center options horizontally */
-      align-items: center; /* Center options vertically */
+      background-color: black;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 0 20px;
-      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+      z-index: 1000;
     }
 
     header img {
       max-height: 80px;
-      animation: fadeIn 3s forwards;
+      animation: fadeIn 3s ease-in 1s forwards;
       opacity: 0;
-      position: absolute; /* Ensure the logo stays in the corner */
-      top: 10px;
-      left: 20px;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    .main-content {
-      flex: 1; /* Fill remaining space */
-      display: flex;
-      flex-direction: column;
-      justify-content: center; /* Vertically center content */
-      align-items: center; /* Horizontally center content */
-    }
-
-    .search-container {
-      margin-bottom: 20px; /* Space between search and options */
-    }
-
-    .search-container input[type="text"] {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 1px solid #71deff;
-      width: 300px;
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .options {
       display: flex;
-      gap: 60px;
+      gap: 30px;
     }
 
     .options a {
-      color: black;
+      color: white;
       text-decoration: none;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 16px;
       padding: 5px 15px;
       transition: color 0.3s ease, background-color 0.3s ease;
     }
 
     .options a:hover {
-      color: black;
-      background-color: #adeeff;
+      color: #71deff;
+      background-color: #333;
       border-radius: 5px;
-      transition: ease-in-out;
     }
 
+    /* Main Content Styles */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 100px; /* Space for fixed header */
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+      flex-direction: column;
+    }
+
+    .search-container input[type="text"] {
+      padding: 10px 15px;
+      border: 1px solid #71deff;
+      border-radius: 10px;
+      font-size: 16px;
+      width: 300px;
+      background-color: transparent;
+      color: white;
+    }
+
+    .search-container input[type="text"]::placeholder {
+      color: #ccc;
+    }
+
+    /* Footer Styles */
     footer {
-      background-color: #333;
+      background: linear-gradient(to right, #333, #000);
       color: white;
       text-align: center;
-      padding: 10px 20px;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .options {
+        gap: 15px;
+      }
+      .options a {
+        font-size: 14px;
+        padding: 5px 10px;
+      }
+      .search-container input[type="text"] {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <img src="skylogo.png" alt="Logo">
     <div class="options">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
     </div>
   </header>
+
+  <!-- Main Content -->
   <div class="main-content">
     <div class="search-container">
-      <input type="text" placeholder="Search location">
+      <input id="autocomplete" type="text" placeholder="Enter a location" aria-label="Enter a location" />
     </div>
   </div>
+
+  <!-- Footer -->
   <footer>
-    Footer Content
+    &copy; 2025 skyupdate. All rights reserved.
   </footer>
+
+  <!-- Google Places Autocomplete Script -->
+  <script>
+    // Initialize Google Places Autocomplete
+    function initAutocomplete() {
+      // Check if Google Maps API is loaded
+      if (typeof google === "undefined" || !google.maps || !google.maps.places) {
+        console.error("Google Maps API failed to load.");
+        return;
+      }
+
+      // Get the input element
+      const input = document.getElementById("autocomplete");
+      if (!input) {
+        console.error("Input element not found.");
+        return;
+      }
+
+      // Initialize Autocomplete
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["geocode"], // Restrict to addresses
+        componentRestrictions: { country: "IN" } // Restrict to India
+      });
+
+      // Add listener for place selection
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          console.error("Place details not found.");
+          return;
+        }
+        console.log("Selected place:", place);
+        // You can use place.geometry.location to get latitude and longitude
+        const lat = place.geometry.location.lat();
+        const lng = place.geometry.location.lng();
+        console.log("Latitude:", lat, "Longitude:", lng);
+      });
+    }
+
+    // Load Google Maps API script
+    function loadGoogleMapsScript() {
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDixxbbJmj2zVV-8QYFU2QRFSPCQoEf8_Q&libraries=places&callback=initAutocomplete`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
+    // Start loading the Google Maps API
+    loadGoogleMapsScript();
+  </script>
 </body>
 </html>
