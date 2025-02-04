@@ -14,28 +14,26 @@
       display: flex;
       flex-direction: column;
       color: white;
+      overflow: hidden;
     }
     /* Video Background */
     .video-background {
       position: absolute;
       top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
+      right: 0%;
+      bottom: 0%;
+      z-index: -1;
       overflow: hidden;
-      z-index: -1; /* Ensures the video stays behind the content */
+     
     }
 
-    #bg-video {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
 
 
     /* Header Styles */
     header {
-      background-color: black;
+      /*background-color: black;*/
       position: fixed;
       top: 0;
       left: 0;
@@ -46,7 +44,7 @@
       align-items: center;
       padding: 0 20px;
       box-sizing: border-box;
-      z-index: 1000;
+      z-index: -1;
     }
 
     header img {
@@ -88,7 +86,7 @@
       justify-content: center;
       align-items: center;
       margin-top: 100px; /* Space for fixed header */
-      z-index: 10;
+      z-index: 2;
     }
 
     .search-container {
@@ -115,13 +113,27 @@
 
     /* Footer Styles */
     footer {
-      background: linear-gradient(to right, #333, #000);
+      /*background: linear-gradient(to right, #333, #000);*/
       color: white;
       text-align: center;
       padding: 20px;
       font-size: 14px;
+      z-index: 2;
     }
 
+     /* Responsive Design  for bg*/
+     @media(min-aspect-ratio:16/9){
+      .bg-video{
+        width: 100%;
+        height:auto;
+      }
+     }
+     @media(min-aspect-ratio:16/9){
+      .bg-video{
+        width: auto;
+        height: 100%;;
+      }
+     }
     /* Responsive Design */
     @media (max-width: 768px) {
       .options {
@@ -140,7 +152,7 @@
 <body>
   <!-- Video Background -->
   <div class="video-background">
-    <video autoplay muted loop id="bg-video">
+    <video autoplay muted loop plays-inline class="bg-video">
       <source src="857143-hd_1280_720_24fps (2).mp4" type="video/mp4">
       
     </video>
