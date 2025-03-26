@@ -248,16 +248,15 @@ searchButton.addEventListener("click", async () => {
     const mlData = await mlResponse.json();
     if (mlData.error) throw new Error(mlData.error);
 
-    // 🔹 Fetch real-time weather from OpenWeatherMap via Flask (to avoid CORS issues)
+    // 🔹 Fetch real-time 5-day forecast from OpenWeatherMap via Flask
     const weatherResponse = await fetch(`http://127.0.0.1:5000/weather?city=${city}`);
-    
     if (!weatherResponse.ok) throw new Error("Failed to fetch weather from OpenWeatherMap.");
     
     const weatherData = await weatherResponse.json();
-    if (weatherData.cod !== 200) throw new Error(weatherData.message);
+    if (weatherData.error) throw new Error(weatherData.error);
 
-    // 🔥 Display results
-    displayWeather(city, mlData.predicted_weather, weatherData);
+    // Display results
+    displayWeather(city, mlData.predicted_weather, weatherData.forecast);
   } catch (error) {
     console.error("Error:", error);
     alert("Failed to fetch weather data. Please try again.");
@@ -265,17 +264,36 @@ searchButton.addEventListener("click", async () => {
 });
 
 // Function to display weather on the page
-function displayWeather(city, mlPrediction, liveWeather) {
-  const resultHTML = `
-    <h2>Weather for ${city}</h2>
-    <p><strong>ML Prediction:</strong> ${mlPrediction}</p>
-    <p><strong>Current Temperature:</strong> ${liveWeather.main.temp}°C</p>
-    <p><strong>Humidity:</strong> ${liveWeather.main.humidity}%</p>
-    <p><strong>Condition:</strong> ${liveWeather.weather[0].description}</p>
+function displayWeather(city, mlPredictions, liveForecast) {
+  let resultHTML = `<h2>Weather Forecast for ${city}</h2>`;
+  
+  resultHTML += `
+    <table border="1">
+      <tr>
+        <th>Day</th>
+        <th>ML Prediction</th>
+        <th>Real Temperature</th>
+        <th>Humidity</th>
+        <th>Condition</th>
+      </tr>
   `;
+
+  for (let i = 1; i <= 5; i++) {
+    resultHTML += `
+      <tr>
+        <td>Day ${i}</td>
+        <td>${mlPredictions[`Day ${i}`] || "Unknown"}</td>
+        <td>${liveForecast[`Day ${i}`]?.temperature || "N/A"}°C</td>
+        <td>${liveForecast[`Day ${i}`]?.humidity || "N/A"}%</td>
+        <td>${liveForecast[`Day ${i}`]?.condition || "N/A"}</td>
+      </tr>
+    `;
+  }
+
+  resultHTML += `</table>`;
+  
   document.querySelector(".main-content").innerHTML = resultHTML;
 }
-
 
   </script>
 </body>
