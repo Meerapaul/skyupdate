@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Location Search with Nominatim</title>
+  <title>Weather Forecast</title>
   <style>
     /* General Styles */
     body {
@@ -13,6 +13,8 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      color: white;
+      text-align: center;
     }
 
     /* Video Background */
@@ -34,7 +36,7 @@
       width: 100%;
       height: 100px;
       display: flex;
-      justify-content: center; /* Aligning navigation options in center */
+      justify-content: center;
       align-items: center;
       padding: 0 20px;
       box-sizing: border-box;
@@ -45,10 +47,10 @@
       height: 70px;
       width: auto;
       position: absolute;
-      left: 20px; /* Keep logo at the left */
+      left: 20px;
     }
 
-    /* Align options at the center top */
+    /* Navigation Menu */
     .options {
       display: flex;
       gap: 30px;
@@ -73,7 +75,7 @@
       border-radius: 5px;
     }
 
-    /* Main Content Styles */
+    /* Main Content */
     .main-content {
       flex: 1;
       display: flex;
@@ -82,7 +84,6 @@
       align-items: center;
       margin-top: 100px;
       z-index: 2;
-      color: white;
     }
 
     .search-container {
@@ -92,10 +93,10 @@
       position: relative;
     }
 
-    /* White border for search box */
+    /* Search Box */
     .search-container input[type="text"] {
       padding: 10px 15px;
-      border: 2px solid white; /* Changed to white */
+      border: 2px solid white;
       border-radius: 10px;
       font-size: 16px;
       width: 300px;
@@ -104,13 +105,7 @@
     }
 
     .search-container input[type="text"]::placeholder {
-      color: #ffffff;
-    }
-
-    .search-container img {
-      height: 24px;
-      width: 24px;
-      cursor: pointer;
+      color: white;
     }
 
     .search-container button {
@@ -129,66 +124,54 @@
       background-color: #beedff;
     }
 
-    .suggestions {
-      margin-top: 10px;
-      width: 300px;
-      background-color: #7cc2ff;
-      color: white;
+    /* Stylish Table */
+    .weather-table-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .weather-table {
+      width: 80%;
+      border-collapse: collapse;
+      font-size: 16px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.119); /* Glass effect */
+      backdrop-filter: blur(50px);
       border-radius: 10px;
-      max-height: 200px;
-      overflow-y: auto;
-      position: absolute;
-      z-index: 1000;
-      font-size: 12px;
-      top: 100%;
+      overflow: hidden;
     }
 
-    .suggestions div {
-      padding: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s;
+    .weather-table th, .weather-table td {
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      color: white;
     }
 
-    .suggestions div:hover {
-      background-color: #b99f9f;
+    .weather-table th {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: bold;
     }
 
-    /* Footer Styles */
+    .weather-table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .weather-table tr:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transition: 0.3s ease-in-out;
+    }
+
+    /* Footer */
     footer {
       text-align: center;
       padding: 20px;
       font-size: 14px;
-      z-index: -1;
       color: white;
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .options {
-        gap: 15px;
-      }
-      .options a {
-        font-size: 14px;
-        padding: 5px 10px;
-      }
-      .search-container input[type="text"] {
-        width: 100%;
-      }
-    }
-    
-    @media (min-aspect-ratio: 16/9) {
-      .bg-video {
-        width: 100%;
-        height: auto;
-      }
-    }
-
-    @media (max-aspect-ratio: 16/9) {
-      .bg-video {
-        width: auto;
-        height: 100%;
-      }
-    }
   </style>
 </head>
 <body>
@@ -213,20 +196,16 @@
   <div class="main-content">
     <div class="search-container">
       <input id="autocomplete" type="text" placeholder="Enter a location" aria-label="Enter a location" />
-      
       <button id="search-button">Search</button>
-      <div id="suggestions" class="suggestions"></div>
-      
     </div>
   </div>
 
   <!-- Footer -->
   <footer>
     &copy; 2025 Skyupdate. All rights reserved.
-   
   </footer>
 
-  <!-- Nominatim API Script -->
+  <!-- JavaScript -->
   <script>
     const input = document.getElementById("autocomplete");
     const searchButton = document.getElementById("search-button");
@@ -244,7 +223,7 @@
         const mlData = await mlResponse.json();
         if (mlData.error) throw new Error(mlData.error);
 
-        // Fetch real-time 5-day forecast from OpenWeatherMap via Flask
+        // Fetch real-time weather from OpenWeatherMap via Flask
         const weatherResponse = await fetch(`http://127.0.0.1:5000/weather?city=${city}`);
         if (!weatherResponse.ok) throw new Error("Failed to fetch weather from OpenWeatherMap.");
         
@@ -259,17 +238,24 @@
       }
     });
 
-    // Function to display weather on the page
     function displayWeather(city, mlPredictions, liveForecast) {
-      let resultHTML = `<h2>Weather Forecast for ${city}</h2>`;
-      
-      resultHTML += `<table border="1"><tr><th>Day</th><th>ML Prediction</th><th>Real Temperature</th><th>Humidity</th><th>Condition</th></tr>`;
+      let resultHTML = `
+        <h2 style="color: white; font-size: 24px; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); font-family: Poppins, sans-serif;">
+  Weather Forecast for ${city}
+</h2>
+
+        <div class="weather-table-container">
+          <table class="weather-table">
+            <thead>
+              <tr><th>Day</th><th>ML Prediction</th><th>Temperature</th><th>Humidity</th><th>Condition</th></tr>
+            </thead>
+            <tbody>`;
 
       for (let i = 1; i <= 5; i++) {
         resultHTML += `<tr><td>Day ${i}</td><td>${mlPredictions[`Day ${i}`] || "Unknown"}</td><td>${liveForecast[`Day ${i}`]?.temperature || "N/A"}°C</td><td>${liveForecast[`Day ${i}`]?.humidity || "N/A"}%</td><td>${liveForecast[`Day ${i}`]?.condition || "N/A"}</td></tr>`;
       }
 
-      resultHTML += `</table>`;
+      resultHTML += `</tbody></table></div>`;
       document.querySelector(".main-content").innerHTML = resultHTML;
     }
   </script>
