@@ -233,61 +233,68 @@
   <!-- Nominatim API Script -->
   <script>
     const input = document.getElementById("autocomplete");
-    const suggestionsContainer = document.getElementById("suggestions");
-    const searchButton = document.getElementById("search-button");
+const searchButton = document.getElementById("search-button");
 
-    input.addEventListener("input", async (e) => {
-      const query = e.target.value.trim();
+searchButton.addEventListener("click", async () => {
+  const city = input.value.trim();
+  if (!city) {
+    alert("Please enter a location!");
+    return;
+  }
 
-      // Clear suggestions if input is empty
-      if (!query) {
-        suggestionsContainer.innerHTML = "";
-        return;
-      }
+  try {
+    // 🔹 Fetch machine learning prediction from Flask
+    const mlResponse = await fetch(`http://127.0.0.1:5000/predict?city=${city}`);
+    const mlData = await mlResponse.json();
+    if (mlData.error) throw new Error(mlData.error);
 
-      // Fetch suggestions from Nominatim API
-      try {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&addressdetails=1&limit=5`);
-        if (!response.ok) throw new Error("Failed to fetch suggestions");
-        
-        const data = await response.json();
+    // 🔹 Fetch real-time 5-day forecast from OpenWeatherMap via Flask
+    const weatherResponse = await fetch(`http://127.0.0.1:5000/weather?city=${city}`);
+    if (!weatherResponse.ok) throw new Error("Failed to fetch weather from OpenWeatherMap.");
+    
+    const weatherData = await weatherResponse.json();
+    if (weatherData.error) throw new Error(weatherData.error);
 
-        // Display suggestions
-        suggestionsContainer.innerHTML = data
-          .map(
-            (place) => ` 
-            <div data-lat="${place.lat}" data-lon="${place.lon}">
-              ${place.display_name}
-            </div>
-          `
-          )
-          .join("");
+    // Display results
+    displayWeather(city, mlData.predicted_weather, weatherData.forecast);
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to fetch weather data. Please try again.");
+  }
+});
 
-        // Add click event to suggestions
-        document.querySelectorAll("#suggestions div").forEach((div) => {
-          div.addEventListener("click", () => {
-            const lat = div.getAttribute("data-lat");
-            const lon = div.getAttribute("data-lon");
-            input.value = div.textContent; // Set input to selected value
-            console.log(`Selected: ${div.textContent}, Lat: ${lat}, Lon: ${lon}`);
-            suggestionsContainer.innerHTML = ""; // Clear suggestions
-          });
-        });
-      } catch (error) {
-        console.error("Error fetching location suggestions:", error);
-      }
-    });
+// Function to display weather on the page
+function displayWeather(city, mlPredictions, liveForecast) {
+  let resultHTML = `<h2>Weather Forecast for ${city}</h2>`;
+  
+  resultHTML += `
+    <table border="1">
+      <tr>
+        <th>Day</th>
+        <th>ML Prediction</th>
+        <th>Real Temperature</th>
+        <th>Humidity</th>
+        <th>Condition</th>
+      </tr>
+  `;
 
-    // Search button action
-    searchButton.addEventListener("click", () => {
-      const query = input.value.trim();
-      if (query) {
-        console.log(`Searching for: ${query}`);
-        alert(`You searched for: ${query}`);
-      } else {
-        alert("Please enter a location!");
-      }
-    });
+  for (let i = 1; i <= 5; i++) {
+    resultHTML += `
+      <tr>
+        <td>Day ${i}</td>
+        <td>${mlPredictions[`Day ${i}`] || "Unknown"}</td>
+        <td>${liveForecast[`Day ${i}`]?.temperature || "N/A"}°C</td>
+        <td>${liveForecast[`Day ${i}`]?.humidity || "N/A"}%</td>
+        <td>${liveForecast[`Day ${i}`]?.condition || "N/A"}</td>
+      </tr>
+    `;
+  }
+
+  resultHTML += `</table>`;
+  
+  document.querySelector(".main-content").innerHTML = resultHTML;
+}
+
   </script>
 </body>
 </html>
