@@ -89,6 +89,34 @@
       color: white;
       
     }
+     /* Responsive Design */
+     @media (max-width: 768px) {
+      .options {
+        gap: 15px;
+      }
+      .options a {
+        font-size: 14px;
+        padding: 5px 10px;
+      }
+      .search-container input[type="text"] {
+        width: 100%;
+      }
+    }
+    @media(min-aspect-ratio:16/9) {
+      .bg-video{
+      
+      width:100%;
+      height: auto;
+     }
+    }
+    @media(max-aspect-ratio:16/9) {
+      .bg-video{
+      
+      width:auto;
+      height:100% ;
+      }
+    }
+
   </style>
 </head>
 <body>
