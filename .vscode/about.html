@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      color: white;
+    }
+
+    .video-background {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      z-index: -1;
+      object-fit: cover;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+      z-index: 2;
+    }
+
+    .logo {
+      height: 70px;
+      width: auto;
+      position: absolute;
+      left: 20px;
+    }
+
+    .options {
+      display: flex;
+      gap: 30px;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .options a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 5px 15px;
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .options a:hover {
+      color: black;
+      background-color:white;
+      border-radius: 5px;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 100px;
+      z-index: 2;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="video-background">
+    <video autoplay muted loop plays-inline class="bg-video">
+      <source src="857143-hd_1280_720_24fps (2).mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <header>
+    <img src="skylogo.png" alt="Skyupdate Logo" class="logo" />
+    <div class="options">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <h1>Contact Us</h1>
+    <p>Have questions? Reach out to us at <a href="mailto:support@skyupdate.com" style="color: white;">support@skyupdate.com</a></p>
+  </div>
+
+  <footer>
+    &copy; 2025 Skyupdate. All rights reserved.
+  </footer>
+</body>
+</html>

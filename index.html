@@ -10,55 +10,52 @@
       margin: 0;
       font-family: Arial, sans-serif;
       height: 100vh;
-      /*background-color: black;*/
       display: flex;
       flex-direction: column;
-      /*color: white;*/
       overflow: hidden;
     }
+
     /* Video Background */
     .video-background {
-      position:fixed;
+      position: fixed;
       top: 0;
       width: 100%;
       height: 100%;
-      right: 0%;
-      left: 0%;
-      bottom: 0%;
+      left: 0;
       z-index: -1;
-      object-fit:cover;
-      overflow: hidden;
-     
+      object-fit: cover;
     }
-    
 
     /* Header Styles */
     header {
-      /*background-color: black;*/
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100px;
       display: flex;
-      justify-content: space-between; /* Logo on left, options in the center */
+      justify-content: center; /* Aligning navigation options in center */
       align-items: center;
       padding: 0 20px;
-      
       box-sizing: border-box;
       z-index: 2;
     }
 
     .logo {
-      height: 70px; /* Adjust logo size */
+      height: 70px;
       width: auto;
+      position: absolute;
+      left: 20px; /* Keep logo at the left */
     }
 
+    /* Align options at the center top */
     .options {
       display: flex;
       gap: 30px;
-      justify-content: center; /* Center the navigation items */
-      flex: 1;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .options a {
@@ -71,8 +68,8 @@
     }
 
     .options a:hover {
-      color: #71deff;
-      background-color: #333;
+      color: black;
+      background-color:white;
       border-radius: 5px;
     }
 
@@ -81,9 +78,9 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center; /* Center content vertically */
-      align-items: center; /* Center content horizontally */
-      margin-top: 100px; /* Space for fixed header */
+      justify-content: center;
+      align-items: center;
+      margin-top: 100px;
       z-index: 2;
       color: white;
     }
@@ -95,9 +92,10 @@
       position: relative;
     }
 
+    /* White border for search box */
     .search-container input[type="text"] {
       padding: 10px 15px;
-      border: 1px solid #71deff;
+      border: 2px solid white; /* Changed to white */
       border-radius: 10px;
       font-size: 16px;
       width: 300px;
@@ -106,7 +104,7 @@
     }
 
     .search-container input[type="text"]::placeholder {
-      color: #ccc;
+      color: #ffffff;
     }
 
     .search-container img {
@@ -118,8 +116,8 @@
     .search-container button {
       padding: 10px 15px;
       border: none;
-      background-color: #71deff;
-      color: rgb(8, 162, 228);
+      background-color: white;
+      color: black;
       font-weight: bold;
       font-size: 16px;
       border-radius: 10px;
@@ -128,13 +126,13 @@
     }
 
     .search-container button:hover {
-      background-color: #05b6fc;
+      background-color: #beedff;
     }
 
     .suggestions {
       margin-top: 10px;
       width: 300px;
-      background-color: #1388ef;
+      background-color: #7cc2ff;
       color: white;
       border-radius: 10px;
       max-height: 200px;
@@ -142,7 +140,7 @@
       position: absolute;
       z-index: 1000;
       font-size: 12px;
-      top: 100%; /* Ensure it's below the search box */
+      top: 100%;
     }
 
     .suggestions div {
@@ -157,12 +155,11 @@
 
     /* Footer Styles */
     footer {
-      /*background: linear-gradient(to right, #333, #000);*/
-      /*color: white;*/
       text-align: center;
       padding: 20px;
       font-size: 14px;
       z-index: -1;
+      color: white;
     }
 
     /* Responsive Design */
@@ -178,23 +175,20 @@
         width: 100%;
       }
     }
-    @media(min-aspect-ratio:16/9) {
-      .bg-video{
-      
-      width:100%;
-      height: auto;
-     }
-    }
-    @media(max-aspect-ratio:16/9) {
-      .bg-video{
-      
-      width:auto;
-      height:100% ;
-     }
+    
+    @media (min-aspect-ratio: 16/9) {
+      .bg-video {
+        width: 100%;
+        height: auto;
+      }
     }
 
-      
-    
+    @media (max-aspect-ratio: 16/9) {
+      .bg-video {
+        width: auto;
+        height: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -202,9 +196,9 @@
   <div class="video-background">
     <video autoplay muted loop plays-inline class="bg-video">
       <source src="857143-hd_1280_720_24fps (2).mp4" type="video/mp4">
-      
     </video>
   </div>
+
   <!-- Header -->
   <header>
     <img src="skylogo.png" alt="Skyupdate Logo" class="logo" />
@@ -219,82 +213,65 @@
   <div class="main-content">
     <div class="search-container">
       <input id="autocomplete" type="text" placeholder="Enter a location" aria-label="Enter a location" />
-      <img src="searchicon.png" alt="Search Icon" />
+      
       <button id="search-button">Search</button>
       <div id="suggestions" class="suggestions"></div>
+      
     </div>
   </div>
 
   <!-- Footer -->
   <footer>
-    &copy; 2025 skyupdate. All rights reserved.
+    &copy; 2025 Skyupdate. All rights reserved.
+   
   </footer>
 
   <!-- Nominatim API Script -->
   <script>
     const input = document.getElementById("autocomplete");
-const searchButton = document.getElementById("search-button");
+    const searchButton = document.getElementById("search-button");
 
-searchButton.addEventListener("click", async () => {
-  const city = input.value.trim();
-  if (!city) {
-    alert("Please enter a location!");
-    return;
-  }
+    searchButton.addEventListener("click", async () => {
+      const city = input.value.trim();
+      if (!city) {
+        alert("Please enter a location!");
+        return;
+      }
 
-  try {
-    // 🔹 Fetch machine learning prediction from Flask
-    const mlResponse = await fetch(`http://127.0.0.1:5000/predict?city=${city}`);
-    const mlData = await mlResponse.json();
-    if (mlData.error) throw new Error(mlData.error);
+      try {
+        // Fetch ML prediction from Flask
+        const mlResponse = await fetch(`http://127.0.0.1:5000/predict?city=${city}`);
+        const mlData = await mlResponse.json();
+        if (mlData.error) throw new Error(mlData.error);
 
-    // 🔹 Fetch real-time 5-day forecast from OpenWeatherMap via Flask
-    const weatherResponse = await fetch(`http://127.0.0.1:5000/weather?city=${city}`);
-    if (!weatherResponse.ok) throw new Error("Failed to fetch weather from OpenWeatherMap.");
-    
-    const weatherData = await weatherResponse.json();
-    if (weatherData.error) throw new Error(weatherData.error);
+        // Fetch real-time 5-day forecast from OpenWeatherMap via Flask
+        const weatherResponse = await fetch(`http://127.0.0.1:5000/weather?city=${city}`);
+        if (!weatherResponse.ok) throw new Error("Failed to fetch weather from OpenWeatherMap.");
+        
+        const weatherData = await weatherResponse.json();
+        if (weatherData.error) throw new Error(weatherData.error);
 
-    // Display results
-    displayWeather(city, mlData.predicted_weather, weatherData.forecast);
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Failed to fetch weather data. Please try again.");
-  }
-});
+        // Display results
+        displayWeather(city, mlData.predicted_weather, weatherData.forecast);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to fetch weather data. Please try again.");
+      }
+    });
 
-// Function to display weather on the page
-function displayWeather(city, mlPredictions, liveForecast) {
-  let resultHTML = `<h2>Weather Forecast for ${city}</h2>`;
-  
-  resultHTML += `
-    <table border="1">
-      <tr>
-        <th>Day</th>
-        <th>ML Prediction</th>
-        <th>Real Temperature</th>
-        <th>Humidity</th>
-        <th>Condition</th>
-      </tr>
-  `;
+    // Function to display weather on the page
+    function displayWeather(city, mlPredictions, liveForecast) {
+      let resultHTML = `<h2>Weather Forecast for ${city}</h2>`;
+      
+      resultHTML += `<table border="1"><tr><th>Day</th><th>ML Prediction</th><th>Real Temperature</th><th>Humidity</th><th>Condition</th></tr>`;
 
-  for (let i = 1; i <= 5; i++) {
-    resultHTML += `
-      <tr>
-        <td>Day ${i}</td>
-        <td>${mlPredictions[`Day ${i}`] || "Unknown"}</td>
-        <td>${liveForecast[`Day ${i}`]?.temperature || "N/A"}°C</td>
-        <td>${liveForecast[`Day ${i}`]?.humidity || "N/A"}%</td>
-        <td>${liveForecast[`Day ${i}`]?.condition || "N/A"}</td>
-      </tr>
-    `;
-  }
+      for (let i = 1; i <= 5; i++) {
+        resultHTML += `<tr><td>Day ${i}</td><td>${mlPredictions[`Day ${i}`] || "Unknown"}</td><td>${liveForecast[`Day ${i}`]?.temperature || "N/A"}°C</td><td>${liveForecast[`Day ${i}`]?.humidity || "N/A"}%</td><td>${liveForecast[`Day ${i}`]?.condition || "N/A"}</td></tr>`;
+      }
 
-  resultHTML += `</table>`;
-  
-  document.querySelector(".main-content").innerHTML = resultHTML;
-}
-
+      resultHTML += `</table>`;
+      document.querySelector(".main-content").innerHTML = resultHTML;
+    }
   </script>
 </body>
 </html>
