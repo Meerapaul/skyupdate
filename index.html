@@ -26,6 +26,7 @@
        left: 0;
        z-index: -1;
        object-fit: cover;
+       pointer-events: none;
      }
  
      /* Header Styles */
@@ -40,7 +41,8 @@
        align-items: center;
        padding: 0 20px;
        box-sizing: border-box;
-       z-index: 2;
+       z-index: 100; /* Increased z-index */
+       pointer-events: auto;
      }
  
      .logo {
@@ -48,6 +50,8 @@
        width: auto;
        position: absolute;
        left: 20px;
+       padding: 8px 15px;
+       z-index: 101; /* Higher than header */
      }
  
      /* Navigation Menu */
@@ -55,9 +59,10 @@
        display: flex;
        gap: 30px;
        position: absolute;
-       top: 20px;
+       top: 35px; /* Adjusted position */
        left: 50%;
        transform: translateX(-50%);
+       z-index: 101; /* Higher than header */
      }
  
      .options a {
@@ -65,14 +70,17 @@
        text-decoration: none;
        font-weight: bold;
        font-size: 16px;
-       padding: 5px 15px;
-       transition: color 0.3s ease, background-color 0.3s ease;
+       padding: 8px 15px; /* Increased padding */
+       transition: color 0.3s ease;
+       background-color: rgba(0,0,0,0.2); /* Semi-transparent background */
+       border-radius: 5px;
+       z-index: 102;
+       position: relative;
      }
  
      .options a:hover {
        color: black;
        background-color:white;
-       background-color: white;
        border-radius: 5px;
      }
  
@@ -88,8 +96,30 @@
        flex-direction: column;
        justify-content: center;
        align-items: center;
-       /*margin-top: 0px;*/
-       z-index: 2;
+       z-index: 1;/*lower than header*/
+     }
+
+     .main-content h1 {
+       font-family: "Bodoni Moda", serif;
+       font-optical-sizing: auto;
+       font-weight: 550;
+       font-style: normal;
+       font-size: 50px;
+       text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+     }
+ 
+     .main-content p {
+       font-family: "Montserrat", sans-serif;
+       font-optical-sizing: auto;
+       font-weight: 100;
+       font-style: normal;
+       font-size: 20px;
+       color: white;
+       text-align: center;
+       margin-bottom: 45px;
+       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+       font-size: 20px;
+       margin: 0px 300px 100px 300px;
      }
  
      .search-container {
@@ -178,7 +208,7 @@
        color: white;
      }
  
-     /* Title modifications*/
+     
      /* Title Modifications */
      .main-title {
        font-family: "Bodoni Moda", serif;
@@ -245,7 +275,7 @@
    </style>
  </head>
  <body>
-  <!-- Video Background -->
+  
    <!-- Video Background -->
    <div class="video-background">
      <video autoplay muted loop plays-inline class="bg-video">
@@ -255,14 +285,14 @@
  
    <!-- Header -->
    <header>
-     <img src="skylogo.png" alt="Skyupdate Logo" class="logo" />
-     <div class="options">
-       <a href="index.html">Home</a>
-       <a href="about.html">About</a>
-       <a href="contact.html">Contact</a>
-     </div>
-   </header>
- 
+    <a href="index.html"><img src="skylogo.png" alt="Skyupdate Logo" class="logo" /></a>
+    <nav class="options">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
    <!-- Main Content -->
     <!-- the old main content 
    <div class="main-content">
@@ -291,6 +321,7 @@
  
    <!-- JavaScript -->
    <script>
+
      const input = document.getElementById("autocomplete");
      const searchButton = document.getElementById("search-button");
  
