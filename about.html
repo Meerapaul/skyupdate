@@ -23,6 +23,7 @@
       left: 0;
       z-index: -1;
       object-fit: cover;
+      pointer-events: none;
     }
 
     header {
@@ -36,7 +37,8 @@
       align-items: center;
       padding: 0 20px;
       box-sizing: border-box;
-      z-index: 2;
+      z-index: 100;
+      pointer-events: auto;
     }
 
     .logo {
@@ -44,6 +46,8 @@
       width: auto;
       position: absolute;
       left: 20px;
+      padding: 8px 15px;
+      z-index: 101;
     }
 
     .options {
@@ -53,6 +57,7 @@
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 101;
     }
 
     .options a {
@@ -62,6 +67,7 @@
       font-size: 16px;
       padding: 5px 15px;
       transition: color 0.3s ease, background-color 0.3s ease;
+      z-index: 102;
     }
 
     .options a:hover {
@@ -150,12 +156,12 @@
   </div>
 
   <header>
-    <img src="skylogo.png" alt="Skyupdate Logo" class="logo" />
-    <div class="options">
+    <a href="index.html"><img src="skylogo.png" alt="Skyupdate Logo" class="logo" /></a>
+    <nav class="options">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-    </div>
+    </nav>
   </header>
 
   <div class="main-content">

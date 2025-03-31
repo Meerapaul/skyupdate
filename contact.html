@@ -23,6 +23,7 @@
       left: 0;
       z-index: -1;
       object-fit: cover;
+      pointer-events: none;
     }
 
     header {
@@ -36,7 +37,8 @@
       align-items: center;
       padding: 0 20px;
       box-sizing: border-box;
-      z-index: 2;
+      z-index: 100;
+      pointer-events: auto;
     }
 
     .logo {
@@ -44,31 +46,45 @@
       width: auto;
       position: absolute;
       left: 20px;
+      padding: 8px 15px;
+      z-index: 101;
     }
 
+    /* Navigation Menu */
     .options {
-      display: flex;
-      gap: 30px;
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .options a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 20px;
-      padding: 5px 15px;
-      transition: color 0.3s ease, background-color 0.3s ease;
-    }
-
-    .options a:hover {
-      color: black;
-      background-color:white;
-      border-radius: 5px;
-    }
+       display: flex;
+       gap: 30px;
+       position: absolute;
+       top: 35px; /* Adjusted position */
+       left: 50%;
+       transform: translateX(-50%);
+       z-index: 101; /* Higher than header */
+     }
+ 
+     .options a {
+       color: white;
+       text-decoration: none;
+       font-weight: bold;
+       font-size: 16px;
+       padding: 8px 15px; /* Increased padding */
+       transition: color 0.3s ease;
+       background-color: rgba(0,0,0,0.2); /* Semi-transparent background */
+       border-radius: 5px;
+       z-index: 102;
+       position: relative;
+     }
+ 
+     .options a:hover {
+       color: black;
+       background-color:white;
+       border-radius: 5px;
+     }
+ 
+     /* Fix for Options Click */
+     .options a:visited, .options a:active {
+       color: white;
+     }
+ 
 
     .main-content {
       flex: 1;
@@ -147,12 +163,12 @@
   </div>
 
   <header>
-    <img src="skylogo.png" alt="Skyupdate Logo" class="logo" />
-    <div class="options">
+    <a href="index.html"><img src="skylogo.png" alt="Skyupdate Logo" class="logo" /></a>
+    <nav class="options">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-    </div>
+    </nav>
   </header>
 
   <div class="main-content">
