@@ -1,200 +1,350 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather Forecast</title>
-  <style>
-    /* General Styles */
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      color: white;
-      text-align: center;
-    }
-
-    /* Video Background */
-    .video-background {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      z-index: -1;
-      object-fit: cover;
-    }
-
-    /* Header Styles */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0 20px;
-      box-sizing: border-box;
-      z-index: 2;
-    }
-
-    .logo {
-      height: 70px;
-      width: auto;
-      position: absolute;
-      left: 20px;
-    }
-
-    /* Navigation Menu */
-    .options {
-      display: flex;
-      gap: 30px;
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .options a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      padding: 5px 15px;
-      transition: color 0.3s ease, background-color 0.3s ease;
-    }
-
-    .options a:hover {
-      color: black;
-      background-color: white;
-      border-radius: 5px;
-    }
-
-    /* Fix for Options Click */
-    .options a:visited, .options a:active {
-      color: white;
-    }
-
-    /* Main Content */
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 2;
-    }
-
-    .search-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      position: relative;
-    }
-
-    /* Search Box */
-    .search-container input[type="text"] {
-      padding: 10px 15px;
-      border: 2px solid white;
-      border-radius: 10px;
-      font-size: 16px;
-      width: 300px;
-      background-color: transparent;
-      color: white;
-    }
-
-    .search-container input[type="text"]::placeholder {
-      color: white;
-    }
-
-    .search-container button {
-      padding: 10px 15px;
-      border: none;
-      background-color: white;
-      color: black;
-      font-weight: bold;
-      font-size: 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .search-container button:hover {
-      background-color: #beedff;
-    }
-
-    /* Title Modifications */
-    .main-title {
-      font-family: "Poppins", sans-serif;
-      font-size: 60px;
-      font-weight: 700;
-      color: white;
-      text-align: center;
-      margin-bottom: 0px;
-      text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .sub-title {
-      font-family: "Montserrat", sans-serif;
-      font-size: 20px;
-      font-weight: 100;
-      color: white;
-      text-align: center;
-      margin-bottom: 45px;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .options {
-        gap: 15px;
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Weather Forecast</title>
+   <style>
+     /* General Styles */
+     body {
+       margin: 0;
+       font-family: Arial, sans-serif;
+       height: 100vh;
+       display: flex;
+       flex-direction: column;
+       overflow: hidden;
+       color: white;
+       text-align: center;
+     }
+ 
+     /* Video Background */
+     .video-background {
+       position: fixed;
+       top: 0;
+       width: 100%;
+       height: 100%;
+       left: 0;
+       z-index: -1;
+       object-fit: cover;
+     }
+ 
+     /* Header Styles */
+     header {
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100px;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       padding: 0 20px;
+       box-sizing: border-box;
+       z-index: 2;
+     }
+ 
+     .logo {
+       height: 70px;
+       width: auto;
+       position: absolute;
+       left: 20px;
+     }
+ 
+     /* Navigation Menu */
+     .options {
+       display: flex;
+       gap: 30px;
+       position: absolute;
+       top: 20px;
+       left: 50%;
+       transform: translateX(-50%);
+     }
+ 
+     .options a {
+       color: white;
+       text-decoration: none;
+       font-weight: bold;
+       font-size: 16px;
+       padding: 5px 15px;
+       transition: color 0.3s ease, background-color 0.3s ease;
+     }
+ 
+     .options a:hover {
+       color: black;
+       background-color:white;
+       background-color: white;
+       border-radius: 5px;
+     }
+ 
+     /* Fix for Options Click */
+     .options a:visited, .options a:active {
+       color: white;
+     }
+ 
+     /* Main Content */
+     .main-content {
+       flex: 1;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       /*margin-top: 0px;*/
+       z-index: 2;
+     }
+ 
+     .search-container {
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       position: relative;
+     }
+ 
+     /* Search Box */
+     .search-container input[type="text"] {
+       padding: 10px 15px;
+       border: 2px solid white;
+       border-radius: 10px;
+       font-size: 16px;
+       width: 300px;
+       background-color: transparent;
+       color: white;
+     }
+ 
+     .search-container input[type="text"]::placeholder {
+       color: white;
+     }
+ 
+     .search-container button {
+       padding: 10px 15px;
+       border: none;
+       background-color: white;
+       color: black;
+       font-weight: bold;
+       font-size: 16px;
+       border-radius: 10px;
+       cursor: pointer;
+       transition: background-color 0.3s ease;
+     }
+ 
+     .search-container button:hover {
+       background-color: #beedff;
+     }
+ 
+     /* Stylish Table */
+     .weather-table-container {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       width: 100%;
+       margin-top: 20px;
+     }
+ 
+     .weather-table {
+       width: 80%;
+       border-collapse: collapse;
+       font-size: 16px;
+       text-align: center;
+       background: rgba(255, 255, 255, 0.119); /* Glass effect */
+       backdrop-filter: blur(50px);
+       border-radius: 10px;
+       overflow: hidden;
+     }
+ 
+     .weather-table th, .weather-table td {
+       padding: 15px;
+       border: 1px solid rgba(255, 255, 255, 0.03);
+       color: white;
+     }
+ 
+     .weather-table th {
+       background: rgba(255, 255, 255, 0.2);
+       font-weight: bold;
+     }
+ 
+     .weather-table tr:nth-child(even) {
+       background: rgba(255, 255, 255, 0.1);
+     }
+ 
+     .weather-table tr:hover {
+       background: rgba(255, 255, 255, 0.3);
+       transition: 0.3s ease-in-out;
+     }
+ 
+     /* Footer */
+     footer {
+       text-align: center;
+       padding: 20px;
+       font-size: 14px;
+       color: white;
+     }
+ 
+     /* Title modifications*/
+     /* Title Modifications */
+     .main-title {
+       font-family: "Bodoni Moda", serif;
+       font-optical-sizing: auto;
+       font-weight: 550;
+       font-style: normal;
+       font-family: "Poppins", sans-serif;
+       font-size: 60px;
+ 
+       /*font-size: 48px; 
+       font-weight: bold;*/
+       font-weight: 700;
+       color: white;
+       text-align: center;
+       margin-bottom: 0px;
+       text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+     }
+ 
+     .sub-title {
+       font-family: "Montserrat", sans-serif;
+       font-optical-sizing: auto;
+       font-weight: 100;
+       font-style: normal;
+       font-size: 20px;
+ 
+       /*font-size: 24px; */
+       font-weight: 100;
+       color: white;
+       text-align: center;
+       margin-bottom: 45px;
+       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+     }
+ 
+ 
+ 
+     /* Responsive Design */
+     @media (max-width: 768px) {
+       .options {
+         gap: 15px;
+       }
+       .options a {
+         font-size: 20px;
+         padding: 5px 10px;
+       }
+       .search-container input[type="text"] {
+         width: 100%;
+       }
+     }
+     @media(min-aspect-ratio:16/9) {
+       .bg-video{
+       
+       width:100%;
+       height: auto;
       }
-      .options a {
-        font-size: 20px;
-        padding: 5px 10px;
-      }
-      .search-container input[type="text"] {
-        width: 100%;
-      }
-    }
-  </style>
-</head>
-<body>
+     }
+     @media(max-aspect-ratio:16/9) {
+       .bg-video{
+       
+       width:auto;
+       height:100% ;
+       }
+     }
+ 
+   </style>
+ </head>
+ <body>
   <!-- Video Background -->
-  <div class="video-background">
-    <video autoplay muted loop plays-inline class="bg-video">
-      <source src="857143-hd_1280_720_24fps (2).mp4" type="video/mp4">
-    </video>
-  </div>
-
-  <!-- Header -->
-  <header>
-    <img src="skylogo.png" alt="Skyupdate Logo" class="logo" />
-    <div class="options">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <h1 class="main-title">SkyUpdate</h1>
-    <h2 class="sub-title">Find out future weather today!</h2>
-    <div class="search-container">
-      <input id="autocomplete" type="text" placeholder="Enter a location" aria-label="Enter a location" />
-      <button id="search-button">Search</button>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 Skyupdate. All rights reserved.
-  </footer>
-</body>
-</html>
+   <!-- Video Background -->
+   <div class="video-background">
+     <video autoplay muted loop plays-inline class="bg-video">
+       <source src="857143-hd_1280_720_24fps (2).mp4" type="video/mp4">
+     </video>
+   </div>
+ 
+   <!-- Header -->
+   <header>
+     <img src="skylogo.png" alt="Skyupdate Logo" class="logo" />
+     <div class="options">
+       <a href="index.html">Home</a>
+       <a href="about.html">About</a>
+       <a href="contact.html">Contact</a>
+     </div>
+   </header>
+ 
+   <!-- Main Content -->
+    <!-- the old main content 
+   <div class="main-content">
+     <h1 class="main-title">SkyUpdate</h1>
+     <h2 class="sub-title">Find out future weather today!</h2>
+     <div class="search-container">
+       <input id="autocomplete" type="text" placeholder="Enter a location" aria-label="Enter a location" />
+       <button id="search-button">Search</button>
+     </div>
+   </div> -->
+ 
+   <!-- new Main Content -->
+ <div class="main-content">
+   <h1 class="main-title">SkyUpdate</h1>
+   <h2 class="sub-title">Find out future weather today!</h2>
+   <div class="search-container">
+     <input id="autocomplete" type="text" placeholder="Enter a location" aria-label="Enter a location" />
+     <button id="search-button">Search</button>
+   </div>
+ </div>
+ 
+   <!-- Footer -->
+   <footer>
+     &copy; 2025 Skyupdate. All rights reserved.
+   </footer>
+ 
+   <!-- JavaScript -->
+   <script>
+     const input = document.getElementById("autocomplete");
+     const searchButton = document.getElementById("search-button");
+ 
+     searchButton.addEventListener("click", async () => {
+       const city = input.value.trim();
+       if (!city) {
+         alert("Please enter a location!");
+         return;
+       }
+ 
+       try {
+         // Fetch ML prediction from Flask
+         const mlResponse = await fetch(`http://127.0.0.1:5000/predict?city=${city}`);
+         const mlData = await mlResponse.json();
+         if (mlData.error) throw new Error(mlData.error);
+ 
+         // Fetch real-time weather from OpenWeatherMap via Flask
+         const weatherResponse = await fetch(`http://127.0.0.1:5000/weather?city=${city}`);
+         if (!weatherResponse.ok) throw new Error("Failed to fetch weather from OpenWeatherMap.");
+         
+         const weatherData = await weatherResponse.json();
+         if (weatherData.error) throw new Error(weatherData.error);
+ 
+         // Display results
+         displayWeather(city, mlData.predicted_weather, weatherData.forecast);
+       } catch (error) {
+         console.error("Error:", error);
+         alert("Incorrect Location! Please try again.");
+       }
+     });
+ 
+     function displayWeather(city, mlPredictions, liveForecast) {
+       let resultHTML = `
+         <h2 style="color: white; font-size: 24px; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); font-family: Poppins, sans-serif;">
+   Weather Forecast for ${city}
+ </h2>
+ 
+         <div class="weather-table-container">
+           <table class="weather-table">
+             <thead>
+               <tr><th>Day</th><th>ML Prediction</th><th>Temperature</th><th>Humidity</th><th>Condition</th></tr>
+             </thead>
+             <tbody>`;
+ 
+       for (let i = 1; i <= 5; i++) {
+         resultHTML += `<tr><td>Day ${i}</td><td>${mlPredictions[`Day ${i}`] || "Unknown"}</td><td>${liveForecast[`Day ${i}`]?.temperature || "N/A"}°C</td><td>${liveForecast[`Day ${i}`]?.humidity || "N/A"}%</td><td>${liveForecast[`Day ${i}`]?.condition || "N/A"}</td></tr>`;
+       }
+ 
+       resultHTML += `</tbody></table></div>`;
+       document.querySelector(".main-content").innerHTML = resultHTML;
+     }
+ 
+ 
+   </script>
+ </body>
+ </html>
+ </html>
