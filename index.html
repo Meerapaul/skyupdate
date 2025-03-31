@@ -82,7 +82,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-top: 100px;
+      /*margin-top: 0px;*/
       z-index: 2;
     }
 
@@ -172,13 +172,45 @@
       color: white;
     }
 
+    /* Title modifications*/
+    .main-title {
+      font-family: "Bodoni Moda", serif;
+      font-optical-sizing: auto;
+      font-weight: 550;
+      font-style: normal;
+      font-size: 60px;
+
+      /*font-size: 48px; 
+      font-weight: bold;*/
+      color: white;
+      text-align: center;
+      margin-bottom: 0px;
+      text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .sub-title {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 100;
+      font-style: normal;
+      font-size: 20px;
+
+      /*font-size: 24px; */
+      color: white;
+      text-align: center;
+      margin-bottom: 45px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+
+
     /* Responsive Design */
     @media (max-width: 768px) {
       .options {
         gap: 15px;
       }
       .options a {
-        font-size: 14px;
+        font-size: 20px;
         padding: 5px 10px;
       }
       .search-container input[type="text"] {
@@ -203,7 +235,7 @@
   </style>
 </head>
 <body>
-  <!-- Video Background -->
+ <!-- Video Background -->
   <div class="video-background">
     <video autoplay muted loop plays-inline class="bg-video">
       <source src="857143-hd_1280_720_24fps (2).mp4" type="video/mp4">
@@ -221,12 +253,23 @@
   </header>
 
   <!-- Main Content -->
+   <!-- the old main content 
   <div class="main-content">
     <div class="search-container">
       <input id="autocomplete" type="text" placeholder="Enter a location" aria-label="Enter a location" />
       <button id="search-button">Search</button>
     </div>
+  </div> -->
+
+  <!-- new Main Content -->
+<div class="main-content">
+  <h1 class="main-title">SkyUpdate</h1>
+  <h2 class="sub-title">Find out future weather today!</h2>
+  <div class="search-container">
+    <input id="autocomplete" type="text" placeholder="Enter a location" aria-label="Enter a location" />
+    <button id="search-button">Search</button>
   </div>
+</div>
 
   <!-- Footer -->
   <footer>
@@ -262,7 +305,7 @@
         displayWeather(city, mlData.predicted_weather, weatherData.forecast);
       } catch (error) {
         console.error("Error:", error);
-        alert("Failed to fetch weather data. Please try again.");
+        alert("Incorrect Location! Please try again.");
       }
     });
 
@@ -286,6 +329,8 @@
       resultHTML += `</tbody></table></div>`;
       document.querySelector(".main-content").innerHTML = resultHTML;
     }
+
+
   </script>
 </body>
 </html>
