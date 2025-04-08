@@ -72,7 +72,7 @@
        font-size: 16px;
        padding: 8px 15px; /* Increased padding */
        transition: color 0.3s ease;
-       background-color: rgba(0,0,0,0.2); /* Semi-transparent background */
+
        border-radius: 5px;
        z-index: 102;
        position: relative;
@@ -313,7 +313,7 @@
      <button id="search-button">Search</button>
    </div>
  </div>
- 
+ <br>
    <!-- Footer -->
    <footer>
      &copy; 2025 Skyupdate. All rights reserved.
@@ -352,13 +352,12 @@
          alert("Incorrect Location! Please try again.");
        }
      });
- 
      function displayWeather(city, mlPredictions, liveForecast) {
        let resultHTML = `
-         <h2 style="color: white; font-size: 24px; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); font-family: Poppins, sans-serif;">
+         <h2 style="color: white; margin-top: 100px; font-size: 27px; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); font-family: Poppins, sans-serif;">
    Weather Forecast for ${city}
  </h2>
- 
+ <br>
          <div class="weather-table-container">
            <table class="weather-table">
              <thead>
